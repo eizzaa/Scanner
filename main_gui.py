@@ -104,6 +104,12 @@ class SmartScannerApp(ctk.CTk):
         ctk.CTkButton(self.sidebar, text="Convert Typed", command=self.ui_tts_typed).pack(pady=2, padx=20, fill="x")
         ctk.CTkButton(self.sidebar, text="Browse File for Voice", command=self.ui_tts_browse).pack(pady=2, padx=20, fill="x")
 
+        # --- Language Selection for STT ---
+        ctk.CTkLabel(self.sidebar, text="STT Language:", text_color="white").pack(pady=(10,0))
+        self.stt_lang_menu = ctk.CTkOptionMenu(self.sidebar, values=["Persian", "English"])
+        self.stt_lang_menu.pack(pady=5, padx=20, fill="x")
+        self.stt_lang_menu.set("Persian") # مقدار پیش‌فرض
+
         # --- Export ---
         ctk.CTkButton(self.sidebar, text="EXPORT TO EXCEL", fg_color="#1abc9c", font=("Arial", 14, "bold"), 
                      command=self.ui_export).pack(side="bottom", pady=25, padx=20, fill="x")
@@ -144,13 +150,26 @@ class SmartScannerApp(ctk.CTk):
         self.log("🛑 Mic OFF. Click 'Process' to convert.")
 
     def process_speech(self):
-        self.log("⚙️ Processing speech to Persian text...")
+        # دریافت زبان انتخابی از منوی جدید
+        selected_lang = self.stt_lang_menu.get()
+        lang_code = "fa-IR" if selected_lang == "Persian" else "en-US"
+        
+        self.log(f"⚙️ Processing {selected_lang} speech...")
+        
         def run():
-            text = self.stt_manager.recognize(self.temp_audio_data)
+            # استفاده از temp_audio_data که در capture_thread پر شده است
+            text = self.stt_manager.recognize(self.temp_audio_data, lang_code=lang_code)
             self.last_recognized_text = text
-            self.log(f"📝 Result: {text}")
+            
+            # نمایش نتیجه یا خطا در لاگ
+            if "Error" in text:
+                self.log(f"❌ {text}")
+            else:
+                self.log(f"📝 Result ({selected_lang}): {text}")
+                self.btn_save_voice.configure(state="normal")
+            
             self.btn_process.configure(state="disabled")
-            self.btn_save_voice.configure(state="normal")
+
         threading.Thread(target=run, daemon=True).start()
 
     def cancel_stt(self):
