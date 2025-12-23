@@ -1,0 +1,96 @@
+Use Case: Upload Document
+Actor: User
+Goal: افزودن اسناد برای پردازش
+Precondition: سیستم در حال اجرا باشد
+Main Flow:
+  1. کاربر فایل PDF یا تصویر را انتخاب می‌کند
+  2. سیستم فرمت فایل را بررسی می‌کند
+  3. فایل در پوشه داده ذخیره می‌شود
+Postcondition: سند آماده پردازش است
+Alternate Flow:
+  - در صورت فرمت نادرست، پیام خطا نمایش داده می‌شود
+
+Use Case: Extract Text from Document
+Actor: User
+Goal: استخراج متن از اسناد
+Precondition: سند بارگذاری شده باشد
+Main Flow:
+  1. سیستم تصویر یا PDF را دریافت می‌کند
+  2. OCR اجرا می‌شود
+  3. متن استخراج‌شده ذخیره می‌شود
+Postcondition: متن آماده تحلیل است
+Alternate Flow:
+  - در صورت عدم تشخیص متن، پیام هشدار نمایش داده می‌شود
+
+Use Case: Cluster Documents
+Actor: User
+Goal: دسته‌بندی اسناد بر اساس محتوای متنی
+Precondition: حداقل دو سند با متن استخراج‌شده وجود داشته باشد
+Main Flow:
+  1. سیستم ویژگی‌های متنی را استخراج می‌کند
+  2. الگوریتم خوشه‌بندی اجرا می‌شود
+  3. برچسب خوشه‌ها ذخیره می‌شود
+Postcondition: هر سند دارای شناسه خوشه است
+Alternate Flow:
+  - در صورت وجود کمتر از دو سند، پیام هشدار داده می‌شود
+
+Use Case: Analyze Relationships
+Actor: User
+Goal: شناسایی ارتباطات مفهومی بین اسناد
+Precondition: متن اسناد استخراج شده باشد
+Main Flow:
+  1. سیستم متن‌ها را تحلیل می‌کند
+  2. کلمات کلیدی تعریف‌شده شناسایی می‌شوند
+  3. روابط احتمالی ذخیره می‌شوند
+Postcondition: روابط شناسایی و ذخیره شده‌اند
+Alternate Flow:
+  - در صورت عدم یافتن رابطه، پیام هشدار داده می‌شود
+
+Use Case: Export Results to Excel
+Actor: User
+Goal: ذخیره نتایج تحلیل در فایل Excel
+Precondition: خوشه‌بندی انجام شده باشد
+Main Flow:
+  1. سیستم داده‌ها را جمع‌آوری می‌کند
+  2. فایل Excel تولید می‌شود
+  3. فایل ذخیره می‌شود
+Postcondition: فایل Excel آماده مشاهده است
+Alternate Flow:
+  - در صورت بروز خطا در ذخیره، پیام خطا نمایش داده می‌شود
+
+Use Case: Generate Summary Report
+Actor: User
+Goal: تولید گزارش متنی از تحلیل‌ها
+Precondition: تحلیل کامل شده باشد
+Main Flow:
+  1. سیستم اطلاعات را خلاصه می‌کند
+  2. گزارش متنی تولید می‌شود
+  3. گزارش ذخیره می‌شود
+Postcondition: گزارش آماده مشاهده و چاپ است
+Alternate Flow:
+  - در صورت بروز خطا، پیام خطا نمایش داده می‌شود
+
+Use Case: Control System via Voice (STT)
+Actor: User
+Goal: کنترل سیستم با فرمان صوتی
+Precondition: میکروفن فعال باشد
+Main Flow:
+  1. کاربر دستور صوتی می‌دهد
+  2. سیستم گفتار را به متن تبدیل می‌کند
+  3. دستور تشخیص داده می‌شود
+  4. Use Case مرتبط اجرا می‌شود
+Postcondition: دستور صوتی اجرا شد
+Alternate Flow:
+  - در صورت عدم تشخیص فرمان، درخواست تکرار داده می‌شود
+
+Use Case: Listen to Results (TTS)
+Actor: User
+Goal: ارائه نتایج به‌صورت صوتی
+Precondition: نتیجه‌ای برای ارائه وجود داشته باشد
+Main Flow:
+  1. سیستم متن نتیجه را دریافت می‌کند
+  2. صوت تولید می‌شود
+  3. صوت پخش می‌شود
+Postcondition: کاربر نتیجه را شنید
+Alternate Flow:
+  - در صورت بروز خطا در پخش صوت، پیام خطا نمایش داده می‌شود

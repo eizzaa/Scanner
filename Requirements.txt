@@ -1,0 +1,13 @@
+customtkinter
+pytesseract
+pdf2image
+opencv-python
+numpy
+gTTS
+pyttsx3
+requests
+pandas
+openpyxl
+scikit-learn
+SpeechRecognition
+pyaudio
